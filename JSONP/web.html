@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="container">
+      查询账号信息：
+      <p>名称：<input type="text" id="key" value="wisen" placeholder="wisen" /></p>
+      <p><button onclick="search()">查询</button></p>
+      查询到的数据：
+      <pre id="content"></pre>
+    </div>
+    <script>
+      const host = "http://localhost:3001";
+      function jsonp({ cb, key }) {
+        // 创建一个script标签
+        var scriptELm = document.createElement("script");
+        // 添加请求地址
+        scriptELm.setAttribute(
+          "src",
+          `${host}/getUserInfo?key=${key}&cb=${cb}`
+        );
+        document.body.appendChild(scriptELm);
+      }
+      // 返回的数据会以参数的形式传入
+      function callback(data) {
+        content.innerText = JSON.stringify(data);
+      }
+
+      function search() {
+        const key = document.getElementById("key").value;
+        jsonp({
+          cb: "callback",
+          key
+        });
+      }
+    </script>
+  </body>
+</html>

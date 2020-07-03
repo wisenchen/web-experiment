@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      (function () {
+        const url = "http://localhost/login";
+        const query = formatQuery(window.location.href);
+        const form = createForm(url, query.user);
+        document.write(form);
+        function createForm(url, user) {
+          return `
+                    <form action="${url}" method="post">
+                        <p>账号： <input type="text" name="user" id="user" value="${
+                          user || ""
+                        }" /></p>
+                        <p>密码： <input type="password" name="pwd" id="pwd" /></p>
+                        <input type="submit" value="登录" />
+                    </form>
+          `;
+        }
+        function formatQuery(url) {
+          const last = url.lastIndexOf("?");
+          const query = url.substring(last + 1);
+          const obj = {};
+          query.split("&").forEach((item) => {
+            const [key, val] = item.split("=");
+            obj[key] = decodeURI(val);
+          });
+          return obj;
+        }
+      })();
+    </script>
+  </body>
+</html>
