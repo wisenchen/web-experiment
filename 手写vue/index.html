@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <!-- <script src="cvue.js"></script> -->
+</head>
+
+<body>
+  <div id="app">
+    <p>counter:{{counter}}count:{{count}}</p>
+    <p c-html="html"></p>
+    <p c-text="counter"></p>
+    <p><input c-model="inputValue" type="text"></p>
+    <p><input c-model="inputValue" type="text"></p>
+    <button c-on:click="clickFn">清空输入框的值</button>
+    <button @click="clickFn">清空输入框的值</button>
+    <p>{{arr}}</p>
+  </div>
+  <script type="module">
+    import CVue from './cvue/index.js'
+
+    const app = new CVue({
+      el: "#app",
+      data: {
+        arr:[1,2,3,4,5],
+        counter: 1,
+        count: 1,
+        html: '<h1>hello world</h1>',
+        inputValue:'init',
+        clickFn:function(e){
+          this.inputValue = '';
+        }
+      }
+    })
+
+
+    // 
+    setInterval(()=>{
+      app.counter++;
+      app.count += 2;
+      app.html = `2<sup>${app.counter}</sup> = ${2**app.counter}`
+      app.arr.sort((a,b)=>Math.random()-0.5)
+    },3000)
+
+
+    // 测试数组响应式
+    
+    // setTimeout(()=>{
+    //   app.arr.push({a:123})
+    // },2000)
+
+
+    // setTimeout(()=>{
+    //   app.arr[app.arr.length-1].a = 321;
+    // },2000)
+  </script>
+</body>
+
+</html>
